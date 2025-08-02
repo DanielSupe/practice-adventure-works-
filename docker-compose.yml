@@ -1,29 +1,31 @@
 version: '3.8'
 
 services:
-  mysql:
-    image: mysql
-    container_name: mysql-container
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "YourStrong@Password123"
+      MSSQL_PID: "Express"
     ports:
-      - "3127:3306" # Puerto externo 3127, interno 3306
+      - "1433:1433"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - sqlserver_data:/var/opt/mssql
+      - ./backup:/var/opt/mssql/backup
+      - ./scripts:/scripts
 
-  phpmyadmin:
-    image: phpmyadmin
-    container_name: pma
+  adminer:
+    image: adminer
+    container_name: adminer
     restart: always
     ports:
-      - "8080:80"
+      - "8080:8080"
     environment:
-      PMA_HOST: mysql
-      PMA_PORT: 3306
+      ADMINER_DEFAULT_SERVER: sqlserver
     depends_on:
-      - mysql #espera a que el servicio mysql esté listo
+      - sqlserver
 
 volumes:
-  mysql_data:
+  sqlserver_data:
