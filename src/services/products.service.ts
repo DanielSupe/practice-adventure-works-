@@ -15,7 +15,19 @@ module.exports = (ProductsModel: ModelStatic<IProduct>) => {
     }
 
     const findProductById = async (id: number) => {
-        const product = await ProductsModel.findByPk(id);
+        const product = await ProductsModel.findByPk(id,{
+            include: [
+                {
+                    association: 'comments',
+                    include: [
+                    {
+                        association: 'user',
+                        attributes: ['id', 'name'] // solo traer id y name
+                    }
+                ]
+                }
+            ]
+        });
         return product;
     }
 

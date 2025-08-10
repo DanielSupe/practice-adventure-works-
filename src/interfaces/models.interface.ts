@@ -47,3 +47,12 @@ export interface IProduct extends Model {
 	EndDate?: Date
 	Status?: string
 }
+
+export interface Icomments extends Model {
+  id: number; 
+  productId: number;
+  userId: number; 
+  content: string; 
+  createdAt?: Date; 
+  updatedAt?: Date; 
+};

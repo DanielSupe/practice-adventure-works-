@@ -50,7 +50,7 @@
 
 /**
  * @swagger
- * /products:
+ * /api/products:
  *   post:
  *     summary: Obtener productos paginados
  *     tags: [Products]
@@ -73,7 +73,7 @@
 
 /**
  * @swagger
- * /products/{id}:
+ * /api/products/{id}:
  *   get:
  *     summary: Obtener producto por ID
  *     tags: [Products]
